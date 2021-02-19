@@ -1,5 +1,4 @@
 const mock = (config, prefix = "api") => {
-  console.log("prefix", prefix);
   const Koa = require("koa");
   const Router = require("koa-router");
   const glob = require("glob");
