@@ -11,7 +11,7 @@ const mock = (config, prefix = "api") => {
   const router = new Router({ prefix: `/${prefix}` });
 
   /***
-   * @fileUrl 请求的路径
+   * @url 请求的路径
    * @method  请求的方式
    * @defaultJson 默认显示的json数据
    * @callback 回调函数目的是，动态处理不同条件展示的json数据
