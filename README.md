@@ -1,6 +1,6 @@
 ### 启动步骤
 
-1.下载 node 2.npm i 3.npm i -g nodemon 4.nodemon app.js
+1.下载 node   2.npm i   3.npm i -g nodemon   4.nodemon app.js
 
 ### 操作流程
 
