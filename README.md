@@ -35,7 +35,7 @@ return "two.json";
 
 4.post 请求同上是一样的，app.js 里面有样例。
 
-#### 结尾
+### 结尾
 
 1.注意 url 的配置是 api 文件里面的子文文件路径(api 可以省略)
 
@@ -44,3 +44,5 @@ return "two.json";
 3.app.js 只能调用一次 mock(),不能多次调用。mock()的参数是一个数组，例如 2 个请求放到数组里面就可以了
 
 4.defaultJson 的配置是请求接口返回的 默认 json 数据
+
+5.mock()的第二个参数是文件名，默认是用的 api

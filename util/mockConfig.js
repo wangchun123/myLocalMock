@@ -1,4 +1,4 @@
-const mock = (config) => {
+const mock = (config, prefix = "api") => {
   const Koa = require("koa");
   const Router = require("koa-router");
   const glob = require("glob");
@@ -8,7 +8,7 @@ const mock = (config) => {
   const { resolve } = require("path");
 
   const app = new Koa();
-  const router = new Router({ prefix: "/api" });
+  const router = new Router({ prefix: `/${prefix}` });
 
   /***
    * @fileUrl 请求的路径
@@ -17,7 +17,7 @@ const mock = (config) => {
    * @callback 回调函数目的是，动态处理不同条件展示的json数据
    */
   const mockConfig = (url, method, defaultJson, callback) => {
-    glob.sync(resolve("./api", `${url}.json`)).forEach((item, i) => {
+    glob.sync(resolve(`./${prefix}`, `${url}.json`)).forEach((item, i) => {
       let apiJsonPath = item && item.split("/api")[1];
       let apiPath = apiJsonPath.replace(".json", "");
       router[method || "get"](apiPath, (ctx, next) => {
