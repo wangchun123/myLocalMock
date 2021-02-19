@@ -1,4 +1,4 @@
-const { mock } = require("./util/mockConfig");
+const { mock } = require("./config/mockConfig");
 
 mock([
   {
