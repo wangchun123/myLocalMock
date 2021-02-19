@@ -1,4 +1,5 @@
 const mock = (config, prefix = "api") => {
+  console.log("prefix", prefix);
   const Koa = require("koa");
   const Router = require("koa-router");
   const glob = require("glob");
@@ -18,7 +19,7 @@ const mock = (config, prefix = "api") => {
    */
   const mockConfig = (url, method, defaultJson, callback) => {
     glob.sync(resolve(`./${prefix}`, `${url}.json`)).forEach((item, i) => {
-      let apiJsonPath = item && item.split("/api")[1];
+      let apiJsonPath = item && item.split(`/${prefix}`)[1];
       let apiPath = apiJsonPath.replace(".json", "");
       router[method || "get"](apiPath, (ctx, next) => {
         try {
