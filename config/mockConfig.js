@@ -20,12 +20,13 @@ const mock = (config, prefix = "api") => {
     glob.sync(resolve(`./${prefix}`, `${url}.json`)).forEach((item, i) => {
       let apiJsonPath = item && item.split(`/${prefix}`)[1];
       let apiPath = apiJsonPath.replace(".json", "");
-      router[method || "get"](apiPath, (ctx, next) => {
+      router[method || "get"](apiPath, async (ctx, next) => {
         try {
           let finallJson = callback && callback(ctx);
           let changeFileUrl =
             finallJson && item && item.replace(defaultJson, finallJson);
           let jsonStr = fs.readFileSync(changeFileUrl || item).toString();
+          await delayer();
           ctx.body = {
             data: JSON.parse(jsonStr),
             state: 200,
@@ -49,6 +50,14 @@ const mock = (config, prefix = "api") => {
     .use(router.allowedMethods())
     .use(logger());
   app.listen(3000);
+};
+
+const delayer = async (time = 1000) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  });
 };
 
 module.exports = {
