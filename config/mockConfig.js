@@ -11,7 +11,7 @@ const mock = (config, prefix = "api") => {
   const router = new Router({ prefix: `/${prefix}` });
 
   /***
-   * @fileUrl 请求的路径
+   * @url 请求的路径
    * @method  请求的方式
    * @defaultJson 默认显示的json数据
    * @callback 回调函数目的是，动态处理不同条件展示的json数据
@@ -20,12 +20,13 @@ const mock = (config, prefix = "api") => {
     glob.sync(resolve(`./${prefix}`, `${url}.json`)).forEach((item, i) => {
       let apiJsonPath = item && item.split(`/${prefix}`)[1];
       let apiPath = apiJsonPath.replace(".json", "");
-      router[method || "get"](apiPath, (ctx, next) => {
+      router[method || "get"](apiPath, async (ctx, next) => {
         try {
           let finallJson = callback && callback(ctx);
           let changeFileUrl =
             finallJson && item && item.replace(defaultJson, finallJson);
           let jsonStr = fs.readFileSync(changeFileUrl || item).toString();
+          await delayer();
           ctx.body = {
             data: JSON.parse(jsonStr),
             state: 200,
@@ -49,6 +50,14 @@ const mock = (config, prefix = "api") => {
     .use(router.allowedMethods())
     .use(logger());
   app.listen(3000);
+};
+
+const delayer = async (time = 1000) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  });
 };
 
 module.exports = {
